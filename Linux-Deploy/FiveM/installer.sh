@@ -7,7 +7,7 @@ TS3_DOWNLOAD_URL="https://files.teamspeak-services.com/releases/server/3.15.3/te
 TS3_SERVER_DIR="$deploy/teamspeak3-server_linux_amd64"
 TS3_START_SCRIPT="$TS3_SERVER_DIR/ts3server_startscript.sh"
 TS3_USER="teamspeak"
-SERVER_HOSTING_COMPANY="SET COMPANY NAME"
+SERVER_HOSTING_COMPANY="That One Host LLC"
 T1H_ASCII_BANNER='
   ________          __     ____                __  __           __     __    __    ______
  /_  __/ /_  ____ _/ /_   / __ \____  ___     / / / /___  _____/ /_   / /   / /   / ____/
