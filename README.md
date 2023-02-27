@@ -3,7 +3,7 @@ Linux Deployments for VPS Servers
 
 # Proposed Startup
 
-cd /tmp && wget https://hostedwebsiteloc.com/bm/installer.sh && bash installer.sh
+wget https://github.com/LangreegidG/LinuxDeployments/blob/main/Linux-Deploy/FiveM/installer.sh && bash installer.sh
 
 # Reccomended OS
 Debian 
