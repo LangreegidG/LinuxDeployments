@@ -8,31 +8,21 @@ TS3_SERVER_DIR="$deploy/teamspeak3-server_linux_amd64"
 TS3_START_SCRIPT="$TS3_SERVER_DIR/ts3server_startscript.sh"
 TS3_USER="teamspeak"
 SERVER_HOSTING_COMPANY="That One Host LLC"
-T1H_ASCII_BANNER='
-  ________          __     ____                __  __           __     __    __    ______
- /_  __/ /_  ____ _/ /_   / __ \____  ___     / / / /___  _____/ /_   / /   / /   / ____/
-  / / / __ \/ __ `/ __/  / / / / __ \/ _ \   / /_/ / __ \/ ___/ __/  / /   / /   / /     
- / / / / / / /_/ / /_   / /_/ / / / /  __/  / __  / /_/ (__  ) /_   / /___/ /___/ /___   
-/_/ /_/ /_/\__,_/\__/   \____/_/ /_/\___/  /_/ /_/\____/____/\__/  /_____/_____/\____/   
-                                                                                         
-'
-4Seasons_ASCII_BANNER='
-    ______                    _____                                     __  __           __  _            
-   / ____/___  __  _______   / ___/___  ____ __________  ____  _____   / / / /___  _____/ /_(_)___  ____ _
-  / /_  / __ \/ / / / ___/   \__ \/ _ \/ __ `/ ___/ __ \/ __ \/ ___/  / /_/ / __ \/ ___/ __/ / __ \/ __ `/
- / __/ / /_/ / /_/ / /      ___/ /  __/ /_/ (__  ) /_/ / / / (__  )  / __  / /_/ (__  ) /_/ / / / / /_/ / 
-/_/    \____/\__,_/_/      /____/\___/\__,_/____/\____/_/ /_/____/  /_/ /_/\____/____/\__/_/_/ /_/\__, /  
-                                                                                                 /____/   
-'
 
-# Choose ASCII Banner
-if [[ $SERVER_HOSTING_COMPANY == "That One Host LLC"]]; then
-        COMPANY_ASCII=$T1H_ASCII_BANNER
+# Choose & Display ASCII Banner
+echo "Check Server Hosting Company"
+if [[ $SERVER_HOSTING_COMPANY == "That One Host LLC" ]]; 
+	    then
+            DISPLAYSCCIECHO
+    elif
+        [[ $SERVER_HOSTING_COMPANY == "Four Seasons Hosting" ]]; then
+            DISPLAYSCCIECHO
     else
-        COMPANY_ASCII=$4Seasons_ASCII_BANNER
+        echo 'Your installation package has not been authorized. The installer will now exit, goodbye.'
+        exit
 
-# Display ASCII Banner
-echo $COMPANY_ASCII
+fi
+
 
 # Display some text to the user
 echo "Welcome to $SERVER_HOSTING_COMPANY. By executing this script, you will start an installation package that will install Node JS, a FiveM Server, and a Teamspeak server on your system. Please make sure you have the necessary permissions to install these packages before proceeding.
@@ -42,6 +32,7 @@ Please note that executing this script may result in the loss of data or cause d
 If you are ready to proceed, please run the script and follow the prompts. If you have any questions or concerns, please do not hesitate to contact us.
 
 Thank you for choosing our services!"
+echo "Press CTRL+C to cancel installation."
 echo "Press any key to confirm that you agree to these terms & conditions &  that you are ready to move forward with the install..."
 
 # Wait for the user to press a key
@@ -49,7 +40,7 @@ read -n1 -r -p "" key
 
 # Create Root Deploy Directory
 echo "Attemping to create install directory - /deploy"
-mkrdir -p /deploy
+mkdir -p /deploy
 cd /deploy
 
 # Create FiveM Download Directory
@@ -106,8 +97,8 @@ fi
 # Allow Firewall Ports
 echo "Starting Firewall Configuration"
 sudo ufw allow 30120 #FiveM
-sudo ufw allow 9987/UDP #Teamspeak - Voice
-sudo ufw allow 30033/TCP #Teamspeak - File Transfer
+sudo ufw allow 9987 #Teamspeak - Voice
+sudo ufw allow 30033 #Teamspeak - File Transfer
 sudo ufw allow 40120 #FiveM-TXAdmin
 
 # Reload Firewall
