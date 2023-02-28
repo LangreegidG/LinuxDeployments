@@ -3,8 +3,8 @@
 # Define Variables
 echo "Defining Variables"
 FIVEM_DOWNLOAD_URL="https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/"
-TS3_DOWNLOAD_URL="https://files.teamspeak-services.com/releases/server/3.15.3/teamspeak3-server_linux_amd64-3.15.3.tar.bz2"
-TS3_SERVER_DIR="$deploy/teamspeak3-server_linux_amd64"
+TS3_DOWNLOAD_URL="https://files.teamspeak-services.com/releases/server/3.13.7/teamspeak3-server_linux_amd64-3.13.7.tar.bz2"
+TS3_SERVER_DIR="/deploy/teamspeak3-server_linux_amd64"
 TS3_START_SCRIPT="$TS3_SERVER_DIR/ts3server_startscript.sh"
 TS3_USER="teamspeak"
 SERVER_HOSTING_COMPANY="That One Host LLC"
@@ -13,10 +13,24 @@ SERVER_HOSTING_COMPANY="That One Host LLC"
 echo "Check Server Hosting Company"
 if [[ $SERVER_HOSTING_COMPANY == "That One Host LLC" ]]; 
 	    then
-            DISPLAYSCCIECHO
+            
+            echo '  ________          __     ____                __  __           __     __    __    ______';
+            echo ' /_  __/ /_  ____ _/ /_   / __ \____  ___     / / / /___  _____/ /_   / /   / /   / ____/';
+            echo '  / / / __ \/ __ \`/ __/  / / / / __ \/ _ \   / /_/ / __ \/ ___/ __/  / /   / /   / /     ';
+            echo ' / / / / / / /_/ / /_   / /_/ / / / /  __/  / __  / /_/ (__  ) /_   / /___/ /___/ /___   ';
+            echo '/_/ /_/ /_/\__,_/\__/   \____/_/ /_/\___/  /_/ /_/\____/____/\__/  /_____/_____/\____/   ';
+            echo '                                                                                         ';
+
     elif
         [[ $SERVER_HOSTING_COMPANY == "Four Seasons Hosting" ]]; then
-            DISPLAYSCCIECHO
+            
+            echo '    ______                    _____                                     __  __           __  _            ';
+            echo '   / ____/___  __  _______   / ___/___  ____ __________  ____  _____   / / / /___  _____/ /_(_)___  ____ _';
+            echo '  / /_  / __ \/ / / / ___/   \__ \/ _ \/ __ \`/ ___/ __ \/ __ \/ ___/  / /_/ / __ \/ ___/ __/ / __ \/ __ \`/';
+            echo ' / __/ / /_/ / /_/ / /      ___/ /  __/ /_/ (__  ) /_/ / / / (__  )  / __  / /_/ (__  ) /_/ / / / / /_/ / ';
+            echo '/_/    \____/\__,_/_/      /____/\___/\__,_/____/\____/_/ /_/____/  /_/ /_/\____/____/\__/_/_/ /_/\__, /  ';
+            echo '                                                                                                 /____/   ';
+
     else
         echo 'Your installation package has not been authorized. The installer will now exit, goodbye.'
         exit
@@ -50,7 +64,7 @@ cd /fivem
 
 # Download Latest Fivem Artifacts
 echo "Attempting to find latest FiveM Artifacts"
-LATEST_BUILD=$(curl -s "${FIVEM_DOWNLOAD_URL}" | grep -o 'fivem.*\.tar\.xz' | sort | tail -n1)
+LATEST_BUILD=$(curl -s "${FIVEM_DOWNLOAD_URL}" | grep -o 'fx.*\.tar\.xz' | sort | tail -n1)
 curl -s "${FIVEM_DOWNLOAD_URL}${LATEST_BUILD}" -o "${LATEST_BUILD}"
 
 #Extract the FiveM Artifacts
@@ -63,15 +77,15 @@ sudo useradd -m -U -r -s /bin/false "$TS3_USER"
 
 # Download Latest TS3 Server
 echo "Downloading Latest Teamspeak Server"
-wget "$TS3_DOWNLOAD_URL" -P "$deploy"
+wget "$TS3_DOWNLOAD_URL" -P "/deploy"
 
 # Extract Teamspeak Server Files
 echo "Extracting Teamspeak Server Files"
-tar -xvjf "$deploy/$(basename "$TS3_DOWNLOAD_URL")" -C "$deploy"
+tar -xvjf "/deploy/$(basename "$TS3_DOWNLOAD_URL")" -C "/deploy"
 
 # Move Server Files to the TS3 Install Directory
 echo "Moving Teamspeak Server Files to Install Directory"
-sudo mv "$deploy/$(basename "$TS3_DOWNLOAD_URL" .tar.bz2)" "$TS3_SERVER_DIR"
+sudo mv "/deploy/$(basename "$TS3_DOWNLOAD_URL" .tar.bz2)" "$TS3_SERVER_DIR"
 
 # Define Folder Ownership
 echo "Defining Folder Ownership"
@@ -101,9 +115,13 @@ sudo ufw allow 9987 #Teamspeak - Voice
 sudo ufw allow 30033 #Teamspeak - File Transfer
 sudo ufw allow 40120 #FiveM-TXAdmin
 
+# Enabling Firewall
+echo "Enabling Firewall"
+sudo ufw enable
+
 # Reload Firewall
 echo "Reloading Firewall"
-ufw reload
+sufo ufw reload
 
 # End > Access Downloaded Server Directory
 echo "Changing to FiveM Directory"
